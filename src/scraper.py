@@ -1,12 +1,8 @@
 from datetime import datetime
 from hashlib import shake_256
-
 from rich.progress import Progress
 from tinydb import TinyDB
-
 import data_parser
-
-
 def get_short_hash(content: str, even_length=12) -> str:
     """Generates a short hash from the given content using the shake_256 algorithm."""
     return shake_256(content.encode("utf8")).hexdigest(even_length // 2)
@@ -14,7 +10,6 @@ def get_short_hash(content: str, even_length=12) -> str:
 
 def main():
     """Scrape data from the API and store it in a local database"""
-
     db = TinyDB("db.json")
     year = datetime.now().year
 
@@ -68,6 +63,7 @@ def main():
                 if isinstance(course_details, list) and len(course_details) > 0:
                     subject_name = course_details[0]["SUBJECT"]
                     catalog_nbr = course_details[0]["CATALOG_NBR"]
+                    test_nbr = course_details[0]["CATALOG_NBR"]
 
                     # Course Custom ID
                     course_cid = get_short_hash(
